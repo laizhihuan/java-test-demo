@@ -7,7 +7,6 @@ package com.kojavaee.akka;
 import java.util.concurrent.TimeUnit;
 
 import scala.concurrent.duration.Duration;
-import akka.actor.Actor;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
@@ -15,6 +14,12 @@ import akka.actor.UntypedActor;
 import akka.actor.UntypedActorFactory;
 import akka.routing.RoundRobinRouter;
 
+/**
+ * akka，java actor模型的实现之一
+ * 
+ * @author zhihuanglai
+ *
+ */
 public class Pi {
 	
 	public static void main(String[] args) {
