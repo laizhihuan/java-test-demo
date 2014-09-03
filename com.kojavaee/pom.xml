@@ -49,6 +49,13 @@
 			<artifactId>netty</artifactId>
 			<version>3.6.6.Final</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>ch.ethz.ganymed</groupId>
+			<artifactId>ganymed-ssh2</artifactId>
+			<version>262</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
