@@ -13,9 +13,6 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 /**
- * ClassDesc:TODO Add desc<br/>
- * Function :TODO ADD FUNCTION. <br/>
- * Reason:	 TODO ADD REASON. <br/>
  * Date:     2014年6月3日 下午3:24:20 <br/>
  * @author   lzh
  * @version  
