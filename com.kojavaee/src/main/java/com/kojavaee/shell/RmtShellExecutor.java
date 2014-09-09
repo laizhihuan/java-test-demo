@@ -12,6 +12,8 @@ import ch.ethz.ssh2.StreamGobbler;
 /**
  * 远程执行shell脚本类
  * 
+ * TODO:如何实现执行shell脚步上传文件？
+ * 
  * mytest.sh
  * echo $1 $2 $#
  * #print $1
