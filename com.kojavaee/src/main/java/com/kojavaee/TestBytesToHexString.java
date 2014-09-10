@@ -31,19 +31,22 @@ public class TestBytesToHexString {
 
 	private static String bytesToHexString(byte[] src) {
 		StringBuilder result = new StringBuilder("");
+		
 		if (src == null || src.length <= 0) {
 			return null;
 		}
-		for (int i = 0; i < src.length; i++) {
-			int v = src[i] & 0xFF;
+		
+		for (int i = 0; i < src.length; i++) { //遍历byte数组
+			
+			int v = src[i] & 0xFF; //byte与1111 1111做与运算
 
 			System.out.println(v);
 
-			String hv = toHexString(v, 15, 4);
+			String hv = toHexString(v, 15, 4); //将10进制转成16进制
 
 			System.out.println(hv);
 
-			if (hv.length() < 2) {
+			if (hv.length() < 2) { //将16进制数，如果不足两位，前面补0, eg: 8,-> 08
 				result.append(0);
 			}
 			result.append(hv);
