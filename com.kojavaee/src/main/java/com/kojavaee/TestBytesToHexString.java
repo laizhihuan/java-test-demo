@@ -76,9 +76,9 @@ public class TestBytesToHexString {
 	public static void main(String[] args) {
 //		char a = 65;
 //		char b = 104;
-//		System.out.println(a);
-//		System.out.println(b);
-		System.out.println(bytesToHexString("hello".getBytes()));
-		System.out.println(bytesToHexStr("hello".getBytes()));
+//		System.out.println(a);  //输出 A
+//		System.out.println(b); //输出 h
+		System.out.println(bytesToHexString("hello".getBytes())); //输出: 68656c6c6f
+		System.out.println(bytesToHexStr("hello".getBytes()));    //输出: 68656c6c6f
 	}
 }
