@@ -69,7 +69,10 @@ public class MdEncryptUtil {
 	}
 
 	public static void main(String[] args) {
-		byte[] result = MD5Encode("hzm123456");
+		String pwd="hzm123456";
+		String salt="5311981083002945899";
+		String msg = pwd+salt+pwd+salt+pwd+pwd; //121211形式加密
+		byte[] result = MD5Encode(msg);  //MD5加密字节数组，返回加密后的字节数组
 		System.out.print("md5:");
 		for (byte b : result) {
 			System.out.print(b);
@@ -77,8 +80,11 @@ public class MdEncryptUtil {
 		}
 		System.out.println();
 		System.out.print("hex:");
-		String value = bytesToHexString(result);
+		String value = bytesToHexString(result); //把 [MD5加密字节数组，返回加密后的字节数组] 转换成16进制字符串
 		System.out.println();
-		System.out.println(value);
+		System.out.println(value.toLowerCase()); //转成小写,结果: 1f3855ebb4e3b687e72c811f98f379f6
+		System.out.println();
+		System.out.println(MD5EncodeToHex(msg).toLowerCase()); //MD5加密字符串，返回加密后的16进制字符串,最后转成小写,结果:1f3855ebb4e3b687e72c811f98f379f6
+		
 	}
 }
