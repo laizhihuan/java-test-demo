@@ -67,6 +67,13 @@ public class MdEncryptUtil {
 			return new byte[0];
 		}
 	}
+	
+	//构造规则121211
+	public static String saltAndMd5(/*1*/String pwd,/*2*/String salt)
+	{
+		return MdEncryptUtil.MD5EncodeToHex(
+					new StringBuilder(pwd).append(salt).append(pwd).append(salt).append(pwd).append(pwd).toString()).toLowerCase();
+	}
 
 	public static void main(String[] args) {
 		String pwd="hzm123456";
@@ -85,6 +92,8 @@ public class MdEncryptUtil {
 		System.out.println(value.toLowerCase()); //转成小写,结果: 1f3855ebb4e3b687e72c811f98f379f6
 		System.out.println();
 		System.out.println(MD5EncodeToHex(msg).toLowerCase()); //MD5加密字符串，返回加密后的16进制字符串,最后转成小写,结果:1f3855ebb4e3b687e72c811f98f379f6
+		System.out.println(bytesToHexString(value.toLowerCase().getBytes()));
 		
+		System.out.println(saltAndMd5(pwd,salt)); //结果: 1f3855ebb4e3b687e72c811f98f379f6
 	}
 }
