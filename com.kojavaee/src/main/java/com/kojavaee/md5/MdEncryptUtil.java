@@ -71,8 +71,9 @@ public class MdEncryptUtil {
 	//构造规则121211
 	public static String saltAndMd5(/*1*/String pwd,/*2*/String salt)
 	{
-		return MdEncryptUtil.MD5EncodeToHex(
-					new StringBuilder(pwd).append(salt).append(pwd).append(salt).append(pwd).append(pwd).toString()).toLowerCase();
+		String msg = new StringBuilder(pwd).append(salt).append(pwd).append(salt).append(pwd).append(pwd).toString().toLowerCase();
+		System.out.println(msg);
+		return MdEncryptUtil.MD5EncodeToHex(msg).toLowerCase();
 	}
 
 	public static void main(String[] args) {
