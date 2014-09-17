@@ -1,26 +1,75 @@
 package com.kojavaee.jgroup;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.jgroups.JChannel;
 import org.jgroups.Message;
+import org.jgroups.ReceiverAdapter;
+import org.jgroups.View;
+import org.jgroups.util.Util;
 
 /**
  * http://www.oschina.net/translate/jgroups-writing-a-simple-application
  * @author zhihuanglai
  *
  */
-public class SimpleChat {
+public class SimpleChat extends ReceiverAdapter {
 	
 	JChannel channel;
 	String user_name = System.getProperty("user.name","n/a");
+	final List<String> state=new LinkedList<String>();
 	
 	private void start() throws Exception {
 		channel = new JChannel(); //use the default config, udp.xml
+		channel.setReceiver(this);
 		channel.connect("ChatCluster");
+		channel.getState(null, 10000);
 		eventLoop();
 		channel.close();
+	}
+	
+	public void viewAccepted(View new_view) {
+	    System.out.println("** view: " + new_view);
+	}
+	 
+	public void receive(Message msg) {
+	    String line = msg.getSrc() + ": " + msg.getObject();
+		System.out.println(line);
+		synchronized (state) {
+			state.add(line);
+		}
+	}
+	@SuppressWarnings("unchecked")
+	public void setState(InputStream input) throws Exception {
+		 
+	    List<String> list;
+	    list=(List<String>)Util.objectFromStream(new DataInputStream(input));
+	 
+	    synchronized(state) {
+	        state.clear();
+	        state.addAll(list);
+	 
+	    }
+	 
+	    System.out.println(list.size() + " messages in chat history):");
+	 
+	    for(String str: list) {
+	        System.out.println(str);
+	    }
+	 
+	}
+	
+	public void getState(OutputStream output) throws Exception {
+	    synchronized(state) {
+	        Util.objectToStream(state, new DataOutputStream(output));
+	    }
 	}
 	
 	private void eventLoop() {
