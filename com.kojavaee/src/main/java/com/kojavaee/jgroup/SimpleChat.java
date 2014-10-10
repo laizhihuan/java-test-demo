@@ -25,12 +25,13 @@ public class SimpleChat extends ReceiverAdapter {
 	JChannel channel;
 	String user_name = System.getProperty("user.name","n/a");
 	final List<String> state=new LinkedList<String>();
+	public static String classpath = SimpleChat.class.getClassLoader().getResource("").getPath().replaceAll("%20", " ");
 	
 	private void start() throws Exception {
-		channel = new JChannel(); //use the default config, udp.xml
+		channel = new JChannel(classpath+"/jgroups/udp.xml"); //use the default config, udp.xml
 		channel.setReceiver(this);
 		channel.connect("ChatCluster");
-		channel.getState(null, 10000);
+		channel.getState(null, 10000);  //getState() 方法第一个参数是目标成员，null 表示首个成员（协调者）。第二个参数是超时时间，这里我们设置了 10 秒钟的超时时间，意味着状态传输的时间必须在 10 秒内完成，否则将会抛出异常，0 代表没有超时时间。
 		eventLoop();
 		channel.close();
 	}
