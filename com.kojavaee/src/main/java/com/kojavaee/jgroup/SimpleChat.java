@@ -87,7 +87,6 @@ public class SimpleChat extends ReceiverAdapter {
 	            line="[" + user_name + "] " + line;
 	            Message msg=new Message(null, null, line);
 	            channel.send(msg);
-	 
 	        }
 	 
 	        catch(Exception e) {
