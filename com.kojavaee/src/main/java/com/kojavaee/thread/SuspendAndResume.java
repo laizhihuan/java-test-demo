@@ -25,4 +25,11 @@ public class SuspendAndResume {
         t1.resume();
         t2.resume();
     }
+    
+//    start ...
+//    RUNNABLE
+//    BLOCKED
+//    thread end ....
+//    start ...
+//    为啥有一个Thread没有得到释放?
 }
