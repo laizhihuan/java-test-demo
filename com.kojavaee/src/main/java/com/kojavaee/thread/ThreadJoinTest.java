@@ -1,5 +1,7 @@
 package com.kojavaee.thread;
 
+import java.util.Random;
+
 public class ThreadJoinTest {
     
     static class Computer  extends Thread {
@@ -27,6 +29,29 @@ public class ThreadJoinTest {
         }
     }
     
+    private final static int COUNTER = 1000_0000;
     
+    public static void main(String[] args) throws InterruptedException {
+        int[] array = new int[COUNTER];
+        
+        Random random = new Random();
+        
+        for(int i=0; i<COUNTER; i++) {
+            array[i] = Math.abs(random.nextInt());
+        }
+        
+        long start = System.currentTimeMillis();
+        
+        Computer c1 = new Computer(array,0,COUNTER);
+        Computer c2 = new Computer(array, COUNTER/2, COUNTER);
+        
+        c1.start();
+        c2.start();
+        c1.join();
+        c2.join();
+        System.out.println(System.currentTimeMillis() - start);
+        System.out.println(c1.getResult());
+        System.out.println((c1.getResult() + c2.getResult()) & Integer.MAX_VALUE);
+    }
     
 }
