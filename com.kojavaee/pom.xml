@@ -66,6 +66,13 @@
 			<artifactId>redisson</artifactId>
 			<version>1.1.6</version>
 		</dependency>
+		<!-- rpc pro -->
+		<dependency>
+			<groupId>com.googlecode.protobuf-rpc-pro</groupId>
+			<artifactId>protobuf-rpc-pro-duplex</artifactId>
+			<version>3.3</version>
+			<type>jar</type>
+		</dependency>
 	</dependencies>
 
 	<build>
