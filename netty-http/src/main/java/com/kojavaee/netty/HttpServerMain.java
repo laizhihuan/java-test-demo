@@ -20,9 +20,9 @@ import org.jboss.netty.handler.codec.http.HttpResponseEncoder;
 public class HttpServerMain {
 
     public static void main(String[] args) {
-        
+        start(8080);
     }
-
+    
     public static void start(int port) {
         // 配置服务器，使用java线程作为解释线程
         // TODO：需要了解serverbootstrap
@@ -44,7 +44,7 @@ public class HttpServerMain {
             pipeline.addLast("decoder", new HttpRequestDecoder());
             pipeline.addLast("encoder", new HttpResponseEncoder());
             // http处理handler
-            //pipeline.addLast("handler", new HttpServerHandler());
+            pipeline.addLast("handler", new HttpServerHandler());
             return pipeline;
         }
     }
