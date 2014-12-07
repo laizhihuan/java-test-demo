@@ -7,7 +7,7 @@
  *
 */
 
-package com.kojavaee;
+package com.kojavaee.test;
 /**
  * Date:     2014年5月24日 下午6:03:48 <br/>
  * @author   lzh

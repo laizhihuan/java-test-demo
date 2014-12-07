@@ -1,4 +1,4 @@
-package com.kojavaee;
+package com.kojavaee.test;
 
 /**
  * jdk新加了二进制数

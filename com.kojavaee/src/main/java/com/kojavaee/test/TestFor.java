@@ -7,7 +7,7 @@
  *
 */
 
-package com.kojavaee;
+package com.kojavaee.test;
 /**
  * ClassDesc:九九乘法表<br/>
  * 

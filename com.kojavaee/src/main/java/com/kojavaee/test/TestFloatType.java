@@ -1,4 +1,4 @@
-package com.kojavaee;
+package com.kojavaee.test;
 
 public class TestFloatType {
 	

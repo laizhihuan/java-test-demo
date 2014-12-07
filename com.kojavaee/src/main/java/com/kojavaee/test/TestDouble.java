@@ -7,7 +7,7 @@
  *
 */
 
-package com.kojavaee;
+package com.kojavaee.test;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;

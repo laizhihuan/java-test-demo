@@ -1,4 +1,4 @@
-package com.kojavaee;
+package com.kojavaee.test;
 
 public class TestVariable {
 	int t; //实例变量

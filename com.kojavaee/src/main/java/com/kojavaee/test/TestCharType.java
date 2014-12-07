@@ -1,4 +1,4 @@
-package com.kojavaee;
+package com.kojavaee.test;
 
 public class TestCharType {
 	public static void main(String[] args) {

@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -11,6 +12,16 @@ import java.util.Set;
 public class DefaultActorManager implements ActorManager {
     
     public static final int DEFAULT_ACTOR_THREAD_COUNT = 0;
+    /**
+     * Configuration key for thread count.
+     */
+    public static final String ACTOR_THREAD_COUNT = "threadCount";
+    
+    protected Map<String,AbstractActor> actors = new LinkedHashMap<String,AbstractActor>();
+    
+    protected Map<String,AbstractActor> runnables = new LinkedHashMap<String,AbstractActor>();
+    
+    protected Map<String,AbstractActor> waiters = new LinkedHashMap<String,AbstractActor>();
     
     protected static DefaultActorManager instance;
     
@@ -75,10 +86,8 @@ public class DefaultActorManager implements ActorManager {
         // TODO Auto-generated method stub
         
     }
-
+    
     public void detachActor(Actor actor) {
-        // TODO Auto-generated method stub
-        
     }
 
     public int send(Message message, Actor from, Actor[] to) {

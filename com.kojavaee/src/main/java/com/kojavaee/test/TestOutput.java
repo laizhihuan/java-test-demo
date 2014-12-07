@@ -1,4 +1,4 @@
-package com.kojavaee;
+package com.kojavaee.test;
 
 public class TestOutput {
 	static int[] a = new int[3];
