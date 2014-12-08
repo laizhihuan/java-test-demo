@@ -140,4 +140,9 @@ public class DefaultActorManager implements ActorManager {
         return 0;
     }
 
+    public void awaitMessage(AbstractActor abstractActor) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

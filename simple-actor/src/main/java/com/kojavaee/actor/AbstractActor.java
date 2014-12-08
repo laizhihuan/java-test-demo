@@ -1,5 +1,8 @@
 package com.kojavaee.actor;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public abstract class AbstractActor implements Actor {
     public static final int DEFAULT_MAX_MESSAGES = 100;
     protected DefaultActorManager manager;
@@ -38,17 +41,49 @@ public abstract class AbstractActor implements Actor {
         this.category = category;
     }
     
+    protected List<DefaultMessage> messages = new LinkedList<DefaultMessage>();
+    
     protected DefaultMessage getMatch(String subject, boolean isRegExpr) {
-        
+        DefaultMessage res = null;
+        synchronized(messages) {
+            res = (DefaultMessage)peekNext(subject, isRegExpr);
+        }
+        return res;
     }
     
     protected Message testMessage() {
         return getMatch(null,false);
     }
     
+    /**
+     * Process a message conditionally. If testMessage() returns null no message
+     * will be consumed.
+     * 
+     * @see AbstractActor#testMessage()
+     */
     public boolean receive() {
         Message m = testMessage();
         boolean result = m != null;
+        if(result) {
+            boolean f = remove(m);
+            if(!f) {
+                System.out.println(String.format("receive message not removed: %s", m));
+            }
+            
+            DefaultMessage dm = (DefaultMessage)m;
+            try {
+                dm.fireMessageListener(new MessageEvent(this, dm, MessageEvent.MessageStatus.DELIVERED));
+                loopBody(m);
+                dm.fireMessageListener(new MessageEvent(this, dm, MessageEvent.MessageStatus.COMPLETED));
+            } catch(Exception e) {
+                dm.fireMessageListener(new MessageEvent(this, dm, MessageEvent.MessageStatus.FAILED));
+                System.err.println("loop exception"+e);
+            }
+        }
+        manager.awaitMessage(this);
+        return result;
     }
     
+    /** Process the accepted subject. */
+    abstract protected void loopBody(Message m);
 }

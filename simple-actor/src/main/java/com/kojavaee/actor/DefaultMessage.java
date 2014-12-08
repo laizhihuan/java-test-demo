@@ -1,6 +1,11 @@
 package com.kojavaee.actor;
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class DefaultMessage implements Message {
     
@@ -66,5 +71,47 @@ public class DefaultMessage implements Message {
         res.source = sender;
         return res;
     }
+    
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "[" + "source=" + source + ", subject=" + subject + ", data=" + Utils.truncate(data) + ", delay=" + delayUntil + "]";
+    }
+    
+    public boolean subjectMatches(String s) {
+        return subject != null ? subject.equals(s) : false;
+    }
+    
+    /**
+     * test if this message subject matches a reg expr.
+     * @param p
+     * @return
+     */
+    public boolean subjectMatches(Pattern p) {
+        boolean result = false;
+        if(p != null && subject != null) {
+            Matcher m = p.matcher(subject);
+            result = m.matches();
+        }
+        return result;
+    }
+    
+    protected List<MessageListener> listeners = new LinkedList<MessageListener>();
+    
+    public void addMessageListener(MessageListener l) {
+        if(listeners.contains(l)) {
+            listeners.add(l);
+        }
+    }
+    
+    public void removeMessageListener(MessageListener l) {
+        listeners.remove(l);
+    }
+    
+    public void fireMessageListener(MessageEvent e) {
+        for(MessageListener l : listeners) {
+            l.onMessage(e);
+        }
+    }
+    
 
 }
