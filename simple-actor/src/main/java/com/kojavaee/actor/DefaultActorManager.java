@@ -2,11 +2,13 @@ package com.kojavaee.actor;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
@@ -133,6 +135,27 @@ public class DefaultActorManager implements ActorManager {
     
     protected Random rand = new Random();
     
+    /**
+     * Create a list of actors in a pseudo-random order;
+     */
+    public void randomizeActors() {
+        synchronized (actors) {
+            AbstractActor[] xactors = getActors();
+            List<AbstractActor> zactors = new ArrayList<AbstractActor>(xactors.length);
+            for(AbstractActor a : xactors) {
+                zactors.add(rand.nextInt(zactors.size() + 1),a);
+            }
+            actors.clear();
+            for(AbstractActor a : zactors) {
+                actors.put(a.getName(), a);
+            }
+        }
+    }
+    
+    private AbstractActor[] getActors() {
+        // TODO Auto-generated method stub
+        return null;
+    }
     public int send(Message message, Actor from, Actor[] to) {
         // TODO Auto-generated method stub
         return 0;
@@ -179,8 +202,23 @@ public class DefaultActorManager implements ActorManager {
     }
 
     public int getActorCount(Class type) {
-        // TODO Auto-generated method stub
-        return 0;
+        int res = 0;
+        if( type != null) {
+            synchronized (actors) {
+                for(String key : actors.keySet()) {
+                    Actor a = actors.get(key);
+                    if(type.isAssignableFrom(a.getClass())) {
+                        res ++;
+                    }
+                }
+            }
+        } else {
+            synchronized (actors) {
+                res = actors.size();
+                
+            }
+        }
+        return res;
     }
 
     public void awaitMessage(AbstractActor abstractActor) {
