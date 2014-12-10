@@ -4,9 +4,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Random;
 import java.util.Set;
 
 public class DefaultActorManager implements ActorManager {
@@ -55,10 +58,13 @@ public class DefaultActorManager implements ActorManager {
         }
         return instance;
     }
-
-    private static boolean isEmpty(Properties p) {
-        // TODO Auto-generated method stub
-        return false;
+    /**
+     * Test if map is null or empty
+     * @param map
+     * @return
+     */
+    public static boolean isEmpty(Map<?, ?> map) {
+        return map == null || map.size() == 0;
     }
 
     public Actor createActor(Class<? extends Actor> clazz, String name) {
@@ -87,9 +93,46 @@ public class DefaultActorManager implements ActorManager {
         
     }
     
+    /**
+     * detach an actor
+     */
     public void detachActor(Actor actor) {
+        if(((AbstractActor)actor).getManager() != this) {
+            throw new IllegalStateException("actor not owned by this manager");
+        }
+        
+        String name = actor.getName();
+        synchronized (actors) {
+            if(actors.containsKey(name)) {
+                ((AbstractActor)actor).setManager(null);
+                actors.remove(name);
+                runnables.remove(name);
+                waiters.remove(name);
+            } else {
+                actor = null;
+            }
+        }
+        if(actor != null) {
+            actor.deactivate();
+        }
     }
-
+    
+    public void detachAllActors() {
+        Set<String> xkeys = new HashSet<String>();
+        xkeys.addAll(actors.keySet());
+        Iterator<String> i = xkeys.iterator();
+        while(i.hasNext()) {
+            detachActor(actors.get(i.next()));
+        }
+        synchronized (actors) {
+            actors.clear();
+            runnables.clear();
+            waiters.clear();
+        }
+    }
+    
+    protected Random rand = new Random();
+    
     public int send(Message message, Actor from, Actor[] to) {
         // TODO Auto-generated method stub
         return 0;
