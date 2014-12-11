@@ -86,4 +86,14 @@ public abstract class AbstractActor implements Actor {
     
     /** Process the accepted subject. */
     abstract protected void loopBody(Message m);
+
+    public DefaultMessage[] getMessages() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public boolean getHasThread() {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }

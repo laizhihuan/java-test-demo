@@ -151,11 +151,37 @@ public class DefaultActorManager implements ActorManager {
             }
         }
     }
-    
-    private AbstractActor[] getActors() {
-        // TODO Auto-generated method stub
-        return null;
+    /**
+     * Get actors managed by this manager
+     * @return
+     */
+    public AbstractActor[] getActors() {
+        AbstractActor[] res = new AbstractActor[actors.size()];
+        copyMembers(res);
+        return res;
     }
+    
+    protected void copyMembers(AbstractActor[] res) {
+        int count = 0;
+        synchronized (actors) {
+            for(String key : actors.keySet()) {
+                res[count++] = actors.get(key);
+            }
+        }
+    }
+    
+    protected Map<String, List<Message>> sentMessage = new HashMap<String, List<Message>>();
+    
+    protected boolean recordSentMessages = true;
+    
+    public boolean isRecordSentMessages() {
+        return recordSentMessages;
+    }
+    
+    public void setRecordSentMessages(boolean recordSentMessages) {
+        this.recordSentMessages = recordSentMessages;
+    }
+    
     public int send(Message message, Actor from, Actor[] to) {
         // TODO Auto-generated method stub
         return 0;
@@ -224,6 +250,42 @@ public class DefaultActorManager implements ActorManager {
     public void awaitMessage(AbstractActor abstractActor) {
         // TODO Auto-generated method stub
         
+    }
+    public Thread[] getThreads() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+    public void removeThread(String name) {
+        // TODO Auto-generated method stub
+        
+    }
+    public int getSendPerSecondCount() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+    public int getDispatchPerSecondCount() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+    public int getTrendValue() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+    public int getMaxTrendValue() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+    public Thread addThread(String string) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+    public ActorRunnable getRunnable(String name) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+    public Message[] getAndClearSentMessages(AbstractActor aa) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }
