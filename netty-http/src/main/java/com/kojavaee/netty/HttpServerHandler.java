@@ -25,6 +25,7 @@ public class HttpServerHandler extends SimpleChannelUpstreamHandler {
             throws Exception {
         HttpRequest request = (HttpRequest) e.getMessage();
         String uri = request.getUri();
+        
         System.out.println("uri:" + uri);
         HttpResponse response = new DefaultHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK);
         ChannelBuffer buffer = new DynamicChannelBuffer(2048);
