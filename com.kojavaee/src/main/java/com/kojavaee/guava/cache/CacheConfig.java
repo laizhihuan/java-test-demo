@@ -1,4 +1,4 @@
-package com.kojavaee.guava;
+package com.kojavaee.guava.cache;
 
 /**
  * guava缓存配置

@@ -1,4 +1,4 @@
-package com.kojavaee.guava;
+package com.kojavaee.guava.cache;
 
 import java.util.concurrent.ExecutionException;
 
